@@ -222,7 +222,8 @@ class Player(SphereCollideObject):
         pattern = r"[0-9]"
         strippedString = re.sub(pattern, "", victim)
 
-        if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Space Station"):
+        if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Space Station" or strippedString == "XDrone"
+            or strippedString == "YDrone" or strippedString == "ZDrone"):
             print(victim, " hit at ", intoPosition)
             self.DestroyObject(victim, intoPosition)
 
