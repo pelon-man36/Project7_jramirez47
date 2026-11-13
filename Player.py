@@ -55,6 +55,8 @@ class Player(SphereCollideObject):
         self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
         self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
         self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
+        self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
+
         self.setKeyBindings()
 
     def quit(self):
@@ -75,14 +77,22 @@ class Player(SphereCollideObject):
     def Forward(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveForward, "forward-thrust")
+            self.movingSound.setVolume(0.5)
+            self.movingSound.setLoop(True)
+            self.movingSound.play()
         else:
             self.taskMgr.remove("forward-thrust")
+            self.movingSound.stop()
 
     def Backward(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveBackward, "backward-thrust")
+            self.movingSound.setVolume(0.5)
+            self.movingSound.setLoop(True)
+            self.movingSound.play()
         else:
             self.taskMgr.remove("backward-thrust")
+            self.movingSound.stop()
 
     def Leftward(self, keyDown):
         if keyDown:
