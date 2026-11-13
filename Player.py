@@ -53,6 +53,7 @@ class Player(SphereCollideObject):
         self.EnableHUD()
 
         self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
+        self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
 
         self.setKeyBindings()
 
@@ -155,6 +156,7 @@ class Player(SphereCollideObject):
 
     def Sniper(self):
         if self.missileBaySniper:
+            self.missileSound.play()
             travRate = self.missileDistanceSniper
             aim = self.render.getRelativeVector(self.modelNode, Vec3.up()) # Direction spaceship is facing.
             aim.normalize() # Normalizing a vector makes it consistent all the time.
@@ -182,6 +184,7 @@ class Player(SphereCollideObject):
 
     def Gatling(self):
         if self.missileBayGatling:
+            self.missileSound.play()
             travRate = self.missileDistanceGatling
             aim = self.render.getRelativeVector(self.modelNode, Vec3.up())
             aim.normalize()
