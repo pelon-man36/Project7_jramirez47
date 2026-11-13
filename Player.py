@@ -48,8 +48,11 @@ class Player(SphereCollideObject):
         self.accept("into", self.HandleInto)
 
 
+
         self.taskMgr.add(self.CheckIntervals, "checkMissiles", 34)
         self.EnableHUD()
+
+        self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
 
         self.setKeyBindings()
 
@@ -280,6 +283,8 @@ class Player(SphereCollideObject):
 
     def Speed(self):
         print("Speed boost activated.")
+        self.boosterSound.setLoop(True)
+        self.boosterSound.play()
         self.taskMgr.add(self.SpeedBoost, "speed-boost")
 
     def SpeedBoost(self, task):
@@ -287,6 +292,7 @@ class Player(SphereCollideObject):
             print("Speed boost deactivated.")
             self.flight_speed = 5
             self.turn_speed = .5
+            self.boosterSound.stop()
             return Task.done
         elif task.time <= 5:
             print("Speed boost processing...")
