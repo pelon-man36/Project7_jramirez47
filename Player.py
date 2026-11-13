@@ -57,6 +57,7 @@ class Player(SphereCollideObject):
         self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
         self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
         self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
+        self.weaponSwapSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/doorOpen_002.ogg")
 
         self.setKeyBindings()
 
@@ -347,6 +348,8 @@ class Player(SphereCollideObject):
     def Swap(self, keyDown):
         if keyDown:
             self.weapon_options += 1
+            self.weaponSwapSound.setPlayRate(2)
+            self.weaponSwapSound.play()
             if self.weapon_options > 1:
                 self.weapon_options = 0
             print("Arsenal " + str(self.weapon_options) + " enabled.")
