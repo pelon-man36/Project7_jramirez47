@@ -56,6 +56,7 @@ class Player(SphereCollideObject):
         self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
         self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
         self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
+        self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
 
         self.setKeyBindings()
 
@@ -65,14 +66,22 @@ class Player(SphereCollideObject):
     def Upwards(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveUpwards, "upward-thrust")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("upward-thrust")
+            self.turningSound.stop()
 
     def Downwards(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveDownwards, "downward-thrust")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("downward-thrust")
+            self.turningSound.stop()
 
     def Forward(self, keyDown):
         if keyDown:
@@ -97,26 +106,42 @@ class Player(SphereCollideObject):
     def Leftward(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveLeftward, "leftward-thrust")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("leftward-thrust")
+            self.turningSound.stop()
 
     def Rightward(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.MoveRightward, "rightward-thrust")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("rightward-thrust")
+            self.turningSound.stop()
     
     def LeftTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyLeftTurn, "left-turn")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("left-turn")
+            self.turningSound.stop()
 
     def RightTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyRightTurn, "right-turn")
+            self.turningSound.setVolume(0.5)
+            self.turningSound.setLoop(True)
+            self.turningSound.play()
         else:
             self.taskMgr.remove("right-turn")
+            self.turningSound.stop()
     
     def MoveUpwards(self, task):
         rate = self.turn_speed
