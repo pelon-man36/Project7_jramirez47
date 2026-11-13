@@ -54,7 +54,7 @@ class Player(SphereCollideObject):
 
         self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
         self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
-
+        self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
         self.setKeyBindings()
 
     def quit(self):
@@ -156,6 +156,7 @@ class Player(SphereCollideObject):
 
     def Sniper(self):
         if self.missileBaySniper:
+            self.missileSound.setPlayRate(0.6)
             self.missileSound.play()
             travRate = self.missileDistanceSniper
             aim = self.render.getRelativeVector(self.modelNode, Vec3.up()) # Direction spaceship is facing.
@@ -178,12 +179,15 @@ class Player(SphereCollideObject):
             # If not reloading, reload.
             if not self.taskMgr.hasTaskNamed("reload_sniper"):
                 print("Initializing reload...")
+                self.missileReloadSound.setPlayRate(0.4)
+                self.missileReloadSound.play()
                 # Call reload method, no delay
                 self.taskMgr.doMethodLater(0, self.Reload_Sniper, "reload_sniper")
                 return Task.cont
 
     def Gatling(self):
         if self.missileBayGatling:
+            self.missileSound.setPlayRate(2)
             self.missileSound.play()
             travRate = self.missileDistanceGatling
             aim = self.render.getRelativeVector(self.modelNode, Vec3.up())
@@ -203,6 +207,8 @@ class Player(SphereCollideObject):
         else:
             if not self.taskMgr.hasTaskNamed("reload_gatling"):
                 print("Preparing reload...")
+                self.missileReloadSound.setPlayRate(1)
+                self.missileReloadSound.play()
                 self.taskMgr.doMethodLater(0, self.Reload_Gatling, "reload_gatling")
                 return Task.cont
 
