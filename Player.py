@@ -35,6 +35,7 @@ class Player(SphereCollideObject):
         self.flight_speed = 5
         self.turn_speed = .5
         self.weapon_options = 0
+        self.musicPlay = 0
 
         self.cntExplode = 0
         self.explodeIntervals = {}
@@ -59,6 +60,12 @@ class Player(SphereCollideObject):
         self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
         self.weaponSwapSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/doorOpen_002.ogg")
         self.explosionSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/lowFrequency_explosion_000.ogg")
+
+        self.musicSound = self.loader.loadSfx("./Assets/Sounds/876037__daniel_brooks__dark-mystery-synthwave.mp3")
+        self.muteSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/forceField_000.ogg")
+        self.musicSound.setLoop(True)
+        self.musicSound.setVolume(0.5)
+        self.musicSound.play()
 
         self.setKeyBindings()
 
@@ -362,6 +369,17 @@ class Player(SphereCollideObject):
         elif self.weapon_options == 1:
             self.Gatling()
 
+    def Mute(self):
+        self.muteSound.play()
+        self.musicPlay += 1
+        if self.musicPlay >= 2:
+            self.musicPlay = 0
+        if self.musicPlay == 1:
+            self.musicSound.stop()
+        elif self.musicPlay == 0:
+            self.musicSound.play()
+
+
     def CheckIntervals(self, task):
         for i in Missile.intervals:
             if not Missile.intervals[i].isPlaying():
@@ -402,3 +420,4 @@ class Player(SphereCollideObject):
         self.accept("arrow_left-up", self.LeftTurn, [0])
         self.accept("arrow_right", self.RightTurn, [1])
         self.accept("arrow_right-up", self.RightTurn, [0])
+        self.accept("p", self.Mute)
