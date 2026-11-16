@@ -99,17 +99,26 @@ class Orbiter(SphereCollideObject):
         self.cloudClock = 0
         self.taskFlag = "Traveler-" + str(Orbiter.numOrbits)
         taskMgr.add(self.Orbit, self.taskFlag)
-
-        self.droneDistance = 3000
+        
+        self.attack = 0
+        self.droneDistance = 3500
         self.droneBay = 1
         self.droneReload = 1
 
-        self.accept("o", self.Fire)
+        #self.accept("o", self.Fire)
 
     def Orbit(self, task):
         if self.orbitType == "MLB":
             positionVec = defensePaths.BaseballSeams(task.time * Orbiter.velocity, self.numOrbits, 2.0)
             self.modelNode.setPos(positionVec * self.orbitRadius + self.orbitObject.modelNode.getPos())
+            if self.attack:
+                self.attack -= 1
+                self.Fire()
+            else:
+                if not self.taskMgr.hasTaskNamed("DroneAttack"):
+                    print("Get HIM!")
+                    self.taskMgr.doMethodLater(0, self.DroneCool, "DroneAttack")
+                    return Task.cont
         elif self.orbitType == "Cloud":
             if self.cloudClock < Orbiter.cloudTimer:
                 self.cloudClock += 1
@@ -120,6 +129,17 @@ class Orbiter(SphereCollideObject):
 
         self.modelNode.lookAt(self.staringAt.modelNode)
         return Task.cont
+
+    def DroneCool(self, task):
+        if task.time > self.droneReload:
+            self.attack += 1
+            print("Ready?")
+            if self.attack > 1:
+                self.attack = 1
+            return Task.done
+        elif task.time <= self.droneReload:
+            print("Nah")
+            return Task.cont
 
     def Fire(self):
         if self.droneBay:
