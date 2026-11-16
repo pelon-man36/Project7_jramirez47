@@ -53,13 +53,7 @@ class Player(SphereCollideObject):
         self.taskMgr.add(self.CheckIntervals, "checkMissiles", 34)
         self.EnableHUD()
 
-        self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
-        self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
-        self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
-        self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
-        self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
-        self.weaponSwapSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/doorOpen_002.ogg")
-        self.explosionSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/lowFrequency_explosion_000.ogg")
+        self.setAudio()
 
         self.musicSound = self.loader.loadSfx("./Assets/Sounds/876037__daniel_brooks__dark-mystery-synthwave.mp3")
         self.muteSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/forceField_000.ogg")
@@ -68,6 +62,15 @@ class Player(SphereCollideObject):
         self.musicSound.play()
 
         self.setKeyBindings()
+
+    def setAudio(self):
+        self.boosterSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/thrusterFire_004.ogg")
+        self.missileSound = self.loader.loadSfx("./Assets/Sounds/200459__wubitog__missile-rocket-firing.wav")
+        self.missileReloadSound = self.loader.loadSfx("./Assets/Sounds/520047__xfromarge1__grenade_cycle_reload_02.wav")
+        self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
+        self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
+        self.weaponSwapSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/doorOpen_002.ogg")
+        self.explosionSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/lowFrequency_explosion_000.ogg")
 
     def quit(self):
         sys.exit()
