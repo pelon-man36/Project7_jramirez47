@@ -58,6 +58,7 @@ class Player(SphereCollideObject):
         self.movingSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngine_003.ogg")
         self.turningSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/spaceEngineLow_002.ogg")
         self.weaponSwapSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/doorOpen_002.ogg")
+        self.explosionSound = self.loader.loadSfx("./Assets/Sounds/kenney_sci-fi-sounds/Audio/lowFrequency_explosion_000.ogg")
 
         self.setKeyBindings()
 
@@ -281,6 +282,7 @@ class Player(SphereCollideObject):
     def DestroyObject(self, hitID, hitPosition):
         nodeID = self.render.find(hitID)
         nodeID.detachNode()
+        self.explosionSound.play()
 
         self.explodeNode.setPos(hitPosition)
         self.Explode()
