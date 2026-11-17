@@ -225,7 +225,7 @@ class Player(SphereCollideObject):
         else:
             # If not reloading, reload.
             if not self.taskMgr.hasTaskNamed("reload_sniper"):
-                print("Initializing reload...")
+                #print("Initializing reload...")
                 self.missileReloadSound.setPlayRate(0.4)
                 self.missileReloadSound.play()
                 # Call reload method, no delay
@@ -253,7 +253,7 @@ class Player(SphereCollideObject):
             Missile.intervals[tag].start()
         else:
             if not self.taskMgr.hasTaskNamed("reload_gatling"):
-                print("Preparing reload...")
+                #print("Preparing reload...")
                 self.missileReloadSound.setPlayRate(1)
                 self.missileReloadSound.play()
                 self.taskMgr.doMethodLater(0, self.Reload_Gatling, "reload_gatling")
@@ -262,31 +262,31 @@ class Player(SphereCollideObject):
 
     def HandleInto(self, entry):
         fromNode = entry.getFromNodePath().getName()
-        print("fromNode" + fromNode)
+        #print("fromNode" + fromNode)
         intoNode = entry.getIntoNodePath().getName()
-        print("intoNode" + intoNode)
+        #print("intoNode" + intoNode)
         intoPosition = Vec3(entry.getSurfacePoint(self.render))
 
         tempVar = fromNode.split("_")
-        print("temVar:" + str(tempVar))
+        #print("temVar:" + str(tempVar))
         shooter = tempVar[0]
-        print("Shooter:" + str(shooter))
+        #print("Shooter:" + str(shooter))
         tempVar = intoNode.split("-")
-        print("TempVar1:" + str(tempVar))
+        #print("TempVar1:" + str(tempVar))
         tempVar = intoNode.split("_")
-        print("TempVar2:" + str(tempVar))
+        #print("TempVar2:" + str(tempVar))
         victim = tempVar[0]
-        print("Victim:" + str(victim))
+        #print("Victim:" + str(victim))
 
         pattern = r"[0-9]"
         strippedString = re.sub(pattern, "", victim)
 
         if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Space Station" or strippedString == "XDrone"
             or strippedString == "YDrone" or strippedString == "ZDrone" or strippedString == "Sentinel"):
-            print(victim, " hit at ", intoPosition)
+            #print(victim, " hit at ", intoPosition)
             self.DestroyObject(victim, intoPosition)
 
-        print(shooter + "is DONE")
+        #print(shooter + "is DONE")
         Missile.intervals[shooter].finish()
 
     def DestroyObject(self, hitID, hitPosition):
@@ -319,40 +319,40 @@ class Player(SphereCollideObject):
     def Reload_Sniper(self, task):
         if task.time > self.reloadTimeSniper:
             self.missileBaySniper += 1
-            print("Reload complete.")
+            #print("Reload complete.")
             if self.missileBaySniper > 1:
                 self.missileBaySniper = 1
             return Task.done
         elif task.time <= self.reloadTimeSniper:
-            print("Reload processing...")
+            #print("Reload processing...")
             return Task.cont
 
     def Reload_Gatling(self, task):
         if task.time > self.reloadTimeGatling:
             self.missileBayGatling += 10
-            print("Reload complete.")
+            #print("Reload complete.")
             if self.missileBayGatling > 10:
                 self.missileBayGatling = 10
             return Task.done
         elif task.time <= self.reloadTimeGatling:
-            print("Reload processing...")
+            #print("Reload processing...")
             return Task.cont
 
     def Speed(self):
-        print("Speed boost activated.")
+        #print("Speed boost activated.")
         self.boosterSound.setLoop(True)
         self.boosterSound.play()
         self.taskMgr.add(self.SpeedBoost, "speed-boost")
 
     def SpeedBoost(self, task):
         if task.time > 5:
-            print("Speed boost deactivated.")
+            #print("Speed boost deactivated.")
             self.flight_speed = 5
             self.turn_speed = .5
             self.boosterSound.stop()
             return Task.done
         elif task.time <= 5:
-            print("Speed boost processing...")
+            #print("Speed boost processing...")
             self.flight_speed = 20
             self.turn_speed = 1
             return Task.cont
@@ -364,7 +364,7 @@ class Player(SphereCollideObject):
             self.weaponSwapSound.play()
             if self.weapon_options > 1:
                 self.weapon_options = 0
-            print("Arsenal " + str(self.weapon_options) + " enabled.")
+            #print("Arsenal " + str(self.weapon_options) + " enabled.")
 
     def Fire(self):
         if self.weapon_options == 0:
@@ -392,7 +392,7 @@ class Player(SphereCollideObject):
                 del Missile.fireModels[i]
                 del Missile.cNodes[i]
                 del Missile.collisionSolids[i]
-                print(i + " has reached the end of its fire solution.")
+                #print(i + " has reached the end of its fire solution.")
                 break
         return Task.cont
 

@@ -73,7 +73,7 @@ class Missile(SphereCollideObject):
         Missile.collisionSolids[nodeName] = self.collisionNode.node().getSolid(0)
         Missile.cNodes[nodeName].show()
 
-        print("Fire missle #" + str(Missile.missileCount))
+        #print("Fire missle #" + str(Missile.missileCount))
 
 class Orbiter(SphereCollideObject):
     numOrbits = 0
