@@ -95,6 +95,7 @@ class Orbiter(SphereCollideObject):
         self.orbitRadius = orbitRadius
         self.staringAt = staringAt
         Orbiter.numOrbits += 1
+        self.shipName = nodeName
 
         self.cloudClock = 0
         self.taskFlag = "Traveler-" + str(Orbiter.numOrbits)
@@ -102,9 +103,9 @@ class Orbiter(SphereCollideObject):
         
         self.attack = 0
         self.droneDistance = 3500
-        self.droneBay = 1
+        self.droneBay = 5
         self.droneReload = 1
-        self.droneDoor = 1
+        self.droneDoor = 5
         self.cloud = 0
 
         #self.accept("o", self.Fire)
@@ -118,7 +119,6 @@ class Orbiter(SphereCollideObject):
                 self.Fire()
             else:
                 if not self.taskMgr.hasTaskNamed("DroneAttack"):
-                    print("Get HIM!")
                     self.taskMgr.doMethodLater(0, self.DroneCool, "DroneAttack")
                     return Task.cont
         elif self.orbitType == "Cloud":
@@ -129,14 +129,12 @@ class Orbiter(SphereCollideObject):
                     self.FireATK()
                 else:
                     if not self.taskMgr.hasTaskNamed("DroneCloud"):
-                        #print("Get HIM!")
                         self.taskMgr.doMethodLater(0, self.DroneCloud, "DroneCloud")
                         return Task.cont
             else:
                 self.cloudClock = 0
                 positionVec = defensePaths.Cloud()
                 self.modelNode.setPos(positionVec * self.orbitRadius + self.orbitObject.modelNode.getPos())
-                print("Boo!")
 
         self.modelNode.lookAt(self.staringAt.modelNode)
         return Task.cont
@@ -144,23 +142,19 @@ class Orbiter(SphereCollideObject):
     def DroneCool(self, task):
         if task.time > self.droneReload:
             self.attack += 1
-            print("Ready?")
             if self.attack > 1:
                 self.attack = 1
             return Task.done
         elif task.time <= self.droneReload:
-            print("Nah")
             return Task.cont
 
     def DroneCloud(self, task):
             if task.time > self.droneReload:
                 self.cloud += 1
-                #print("Ready?")
                 if self.cloud > 1:
                     self.cloud = 1
                 return Task.done
             elif task.time <= self.droneReload:
-                #print("Nah")
                 return Task.cont
 
     def Fire(self):
@@ -172,7 +166,7 @@ class Orbiter(SphereCollideObject):
             inFront = aim * 150
             travVec = fireSolution + self.modelNode.getPos()
             self.droneBay -= 1
-            tag = "DroneATK" + str(Orbiter.droneATKCount)
+            tag = self.shipName + str(Orbiter.droneATKCount)
 
             posVec = self.modelNode.getPos() + inFront
             currentATK = Missile(self.loader, "./Assets/Spaceships/Phaser/Phaser/phaser.egg", self.render, tag, posVec, 4.0)
@@ -181,7 +175,6 @@ class Orbiter(SphereCollideObject):
             Missile.intervals[tag].start()
         else:
             if not self.taskMgr.hasTaskNamed("reload_drone"):
-                print("PREPARE ATTACK")
                 self.taskMgr.doMethodLater(0, self.Reload_Drone, "reload_drone")
                 return Task.cont
 
@@ -194,7 +187,7 @@ class Orbiter(SphereCollideObject):
             inFront = aim * 150
             travVec = fireSolution + self.modelNode.getPos()
             self.droneDoor -= 1
-            tag = "DroneCloud" + str(Orbiter.droneCloudCount)
+            tag = self.shipName + str(Orbiter.droneCloudCount)
 
             posVec = self.modelNode.getPos() + inFront
             currentATK = Missile(self.loader, "./Assets/Spaceships/Phaser/Phaser/phaser.egg", self.render, tag, posVec, 4.0)
@@ -203,30 +196,25 @@ class Orbiter(SphereCollideObject):
             Missile.intervals[tag].start()
         else:
             if not self.taskMgr.hasTaskNamed("reload_cloud"):
-                print("PREPARE ATTACK")
                 self.taskMgr.doMethodLater(0, self.Reload_Cloud, "reload_cloud")
                 return Task.cont
 
     def Reload_Drone(self, task):
         if task.time > self.droneReload:
             self.droneBay += 1
-            print("RELOAD COMPLETE")
             if self.droneBay > 1:
                 self.droneBay = 1
             return Task.done
         elif task.time <= self.droneReload:
-            print("PROCESSING")
             return Task.cont
 
     def Reload_Cloud(self, task):
             if task.time > self.droneReload:
                 self.droneDoor += 1
-                print("RELOAD COMPLETE")
                 if self.droneDoor > 1:
                     self.droneDoor = 1
                 return Task.done
             elif task.time <= self.droneReload:
-                print("PROCESSING")
                 return Task.cont
 
     

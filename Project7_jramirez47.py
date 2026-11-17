@@ -60,19 +60,19 @@ class MyApp(ShowBase):
             self.render, "Space Station", (5000, 4000, 70), 50)
 
         self.Sentinel1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
-            "Drone", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet3, 900, "MLB", self.Player)
+            "Sentinel1", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet3, 900, "MLB", self.Player)
 
         self.Sentinel2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
-            "Drone", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet4, 500, "Cloud", self.Player)
+            "Sentinel2", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet4, 500, "Cloud", self.Player)
 
-        #self.Sentinel3 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
-        #    "Drone", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet5, 500, "Cloud", self.Player)
+        self.Sentinel3 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
+            "Sentinel3", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet5, 500, "Cloud", self.Player)
 
-        #self.Sentinel4 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
-        #    "Drone", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet6, 900, "MLB", self.Player)
+        self.Sentinel4 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
+            "Sentinel4", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet6, 900, "MLB", self.Player)
 
-        #self.sentinel5 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
-        #    "Drone", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet2, 900, "MLB", self.Player)
+        self.sentinel5 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Spaceships/DroneDefender/DroneDefender.obj", self.render,
+            "Sentinel5", 6.0, "./Assets/Spaceships/DroneDefender/octotoad1_auv.png", self.Planet2, 900, "MLB", self.Player)
         
 
     def DrawBaseballSeams(self, centralObject, droneName, step, numSeams, radius = 1):
